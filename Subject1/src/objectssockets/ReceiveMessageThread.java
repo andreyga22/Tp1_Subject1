@@ -13,38 +13,29 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author alelizmu
  */
 public class ReceiveMessageThread extends Thread {
 
-    private final ObjectOutputStream output;
-    private final ObjectInputStream input;
+    private ObjectOutputStream output;
+    private ObjectInputStream input;
     private ServerSocket server; // server socket
-    private final Socket connection; // connection to client
+    private Socket connection; // connection to client
     private final boolean disconnect = false;
-    private final int PORT;
-    
-    public ReceiveMessageThread(Socket connection, ObjectOutputStream output, ObjectInputStream input, int PORT) {
+    private final int PORT = 12345;
+
+    public ReceiveMessageThread(Socket connection, ObjectOutputStream output, ObjectInputStream input) {
         this.connection = connection;
-        this.PORT = PORT;
         this.input = input;
         this.output = output;
     }
 
-//    // get streams to send and receive data
-//    private void getStreams() throws IOException {
-//        output = new ObjectOutputStream(connection.getOutputStream());
-//        output.flush(); 
-//        input = new ObjectInputStream(connection.getInputStream());
-//    }
-    // process connection with client
     private void processConnection() throws IOException, InterruptedException, ClassNotFoundException {
-        while(!disconnect) {
-           System.out.println(input.readObject());
-       }
+        while (!disconnect) {
+            System.out.println(input.readObject());
+        }
     }
 
     // close streams and socket
@@ -60,10 +51,26 @@ public class ReceiveMessageThread extends Thread {
         }
     }
 
+    
+    private void waitForConnection() throws IOException {
+        System.out.println("Waiting for connection...\n");
+        connection = server.accept(); // allow server to accept connection
+        System.out.println("Connection received from: " + connection.getInetAddress().getHostName());
+    }
+    
+    private void getStreams() throws IOException {
+        // set up output stream for objects
+        output = new ObjectOutputStream(connection.getOutputStream());
+        output.flush(); // flush output buffer to send header information   
+        // set up input stream for objects
+        input = new ObjectInputStream(connection.getInputStream());
+    }
+    
     @Override
     public void run() {
-    try{
-//            getStreams();
+        try {
+            getStreams();
+            waitForConnection();
             processConnection();
         } catch (IOException | InterruptedException | ClassNotFoundException ex) {
             Logger.getLogger(ReceiveMessageThread.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,4 +79,3 @@ public class ReceiveMessageThread extends Thread {
         }
     }
 }
-

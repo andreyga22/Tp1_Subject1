@@ -25,6 +25,7 @@ public class ChatWindow extends javax.swing.JDialog {
     private final Frame parent;
     private final Tree tree;
     private final Server server;
+
     public ChatWindow(java.awt.Frame parent, boolean modal, String userName, Tree tree, Server server) {
         super(parent, modal);
         initComponents();
@@ -35,6 +36,7 @@ public class ChatWindow extends javax.swing.JDialog {
         this.server = server;
         this.setLocationRelativeTo(null);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -131,7 +133,7 @@ public class ChatWindow extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextWriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextWriteActionPerformed
-        
+
     }//GEN-LAST:event_jTextWriteActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -140,7 +142,7 @@ public class ChatWindow extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void sendBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtActionPerformed
-        
+
     }//GEN-LAST:event_sendBtActionPerformed
 
     private void write(String text) {
@@ -154,7 +156,7 @@ public class ChatWindow extends javax.swing.JDialog {
             System.out.println("Error en la escritura del codigo");
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;

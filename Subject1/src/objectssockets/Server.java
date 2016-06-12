@@ -13,18 +13,17 @@ public class Server {
     private ServerSocket server; // server socket
     private Socket connection; // connection to client
     private int PORT = 12345;
-    
 
-    public Server(int ip) {
-        this.PORT = ip;
+    public Server() {
     }
+
     // set up and run server
     public void runServer() {
         try {
             server = new ServerSocket(PORT); // create ServerSocket
             waitForConnection(); // wait for a connection
             getStreams(); // get input & output streams
-            ReceiveMessageThread thread = new ReceiveMessageThread(connection, output, input, PORT);
+            ReceiveMessageThread thread = new ReceiveMessageThread(connection, output, input);
             thread.start();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -51,7 +50,7 @@ public class Server {
 
     // process connection with client
     public void sendMessage(String message) throws IOException, ClassNotFoundException {
-       output.writeObject(message);
+        output.writeObject(message);
     }
 
     // close streams and socket

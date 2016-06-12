@@ -19,7 +19,8 @@ import objectssockets.Server;
  * @author andre
  */
 public class MainWindow extends javax.swing.JFrame {
-    private  ReadFile read = new ReadFile();
+
+    private ReadFile read = new ReadFile();
     private static final int MAX_CHAR = 468;
     private Tree tree = new Tree();
     private Server server;
@@ -49,8 +50,6 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        IPField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("MainWindow");
@@ -88,27 +87,15 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel3.setText("Digite su nombre");
 
-        jLabel1.setText("Direccion IP");
-
-        IPField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                IPFieldActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                    .addComponent(IPField))
+                .addComponent(nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                 .addGap(31, 31, 31))
         );
         jPanel1Layout.setVerticalGroup(
@@ -118,11 +105,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(IPField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -172,10 +155,6 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void IPFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IPFieldActionPerformed
-
-    }//GEN-LAST:event_IPFieldActionPerformed
-
     private void exitBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitBtActionPerformed
@@ -183,11 +162,10 @@ public class MainWindow extends javax.swing.JFrame {
     private void connectBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectBtActionPerformed
         try {
             String name = nameField.getText();
-            int ip = Integer.parseInt(IPField.getText());
-            if (name.equals("") || IPField.getText().equals("")) {
+            if (name.equals("")) {
                 throw new IllegalArgumentException("Error ");
             }
-            server = new Server(ip);
+            server = new Server();
             server.runServer();
             ChatWindow chat = new ChatWindow(this, true, name, tree, server);
             chat.setVisible(true);
@@ -212,7 +190,7 @@ public class MainWindow extends javax.swing.JFrame {
         } else {
             System.out.println("File access cancelled by user.");
         }
-        
+
     }//GEN-LAST:event_loadKeyBtActionPerformed
 
     public void readFromTheFile(File file) {
@@ -227,12 +205,12 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void readTree() throws IOException, ClassNotFoundException {
-       
+
         tree = read.readTree();
     }
 
     private void readKey() throws IOException, ClassNotFoundException {
-        
+
         tree.setDictionary(read.readDictionary());
     }
 
@@ -248,7 +226,7 @@ public class MainWindow extends javax.swing.JFrame {
                 }
             }
             tree.createDictionary();
-            
+
             tree.writeInTheFile();
         } catch (DuplicatedElement ex) {
             ex.printStackTrace();
@@ -296,12 +274,10 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField IPField;
     private javax.swing.JButton connectBt;
     private javax.swing.JButton createKeyBt;
     private javax.swing.JButton exitBt;
     private javax.swing.JFileChooser fChooser1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

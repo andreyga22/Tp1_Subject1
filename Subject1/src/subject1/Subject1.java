@@ -16,5 +16,5 @@ public class Subject1 {
      */
     public static void main(String[] args) {
     }
-    
+
 }
