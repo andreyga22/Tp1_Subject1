@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class Tree implements Serializable{
     
     private NodeTree root = null;
+    private WriteFile write = new WriteFile();
     private ArrayList<AsciiCharacter> dictionary = new ArrayList<>(); 
     private static final int MAX_CHAR = 468;
     
@@ -190,22 +191,18 @@ public class Tree implements Serializable{
      }
      
      public void writeInTheFile() throws IOException {
+         write.open("key.bin");
          writeTree();
          writeKey();
+         write.close();
      }
      
      private void writeTree() throws IOException {
-            WriteFile write = new WriteFile();
-            write.open("key.bin");
             write.writeTree(this);
-            write.close();
      }
      
      private void writeKey() throws IOException {
-         WriteFile write = new WriteFile();
-            write.open("key.bin");
             write.writeDictionary(dictionary);
-            write.close();
      }
      
      public void setDictionary(ArrayList<AsciiCharacter> element) {

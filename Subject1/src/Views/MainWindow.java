@@ -19,7 +19,7 @@ import objectssockets.Server;
  * @author andre
  */
 public class MainWindow extends javax.swing.JFrame {
-
+    private  ReadFile read = new ReadFile();
     private static final int MAX_CHAR = 468;
     private Tree tree = new Tree();
     private Server server;
@@ -202,37 +202,38 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void loadKeyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadKeyBtActionPerformed
         //esto es para llamar al filechooser   
+        fChooser1.setCurrentDirectory(new java.io.File("."));
         int returnVal = fChooser1.showOpenDialog(this);
+        fChooser1.setAcceptAllFileFilterUsed(false);
         if (returnVal == fChooser1.APPROVE_OPTION) {
             File file = fChooser1.getSelectedFile();
+            readFromTheFile(file);
             System.out.println("adios");
         } else {
             System.out.println("File access cancelled by user.");
         }
-        readFromTheFile();
+        
     }//GEN-LAST:event_loadKeyBtActionPerformed
 
-    public void readFromTheFile() {
+    public void readFromTheFile(File file) {
         try {
+            read.open(file);
             readTree();
             readKey();
+            read.close();
         } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
     }
 
     private void readTree() throws IOException, ClassNotFoundException {
-        ReadFile read = new ReadFile();
-        read.open("key.bin");
+       
         tree = read.readTree();
-        read.close();
     }
 
     private void readKey() throws IOException, ClassNotFoundException {
-        ReadFile read = new ReadFile();
-        read.open("key.bin");
+        
         tree.setDictionary(read.readDictionary());
-        read.close();
     }
 
     public void createKey() {
@@ -247,6 +248,7 @@ public class MainWindow extends javax.swing.JFrame {
                 }
             }
             tree.createDictionary();
+            
             tree.writeInTheFile();
         } catch (DuplicatedElement ex) {
             ex.printStackTrace();
