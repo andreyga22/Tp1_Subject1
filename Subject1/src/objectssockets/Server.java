@@ -23,12 +23,10 @@ public class Server {
             server = new ServerSocket(PORT); // create ServerSocket
             waitForConnection(); // wait for a connection
             getStreams(); // get input & output streams
-            ReceiveMessageThread thread = new ReceiveMessageThread(connection, output, input);
+            ReceiveMessageThread thread = new ReceiveMessageThread(connection, input, "hilo de espera");
             thread.start();
         } catch (IOException ex) {
             ex.printStackTrace();
-        } finally {
-            closeConnection(); // close connection
         }
     }
 
@@ -43,8 +41,7 @@ public class Server {
     private void getStreams() throws IOException {
         // set up output stream for objects
         output = new ObjectOutputStream(connection.getOutputStream());
-        output.flush(); // flush output buffer to send header information   
-        // set up input stream for objects
+        output.flush();
         input = new ObjectInputStream(connection.getInputStream());
     }
 
@@ -58,7 +55,6 @@ public class Server {
         System.out.println("\nTerminating connection");
         try {
             output.close(); // close output stream
-            input.close(); // close input stream
             connection.close(); // close socket
             server.close(); // clse server socket
         } catch (IOException ex) {

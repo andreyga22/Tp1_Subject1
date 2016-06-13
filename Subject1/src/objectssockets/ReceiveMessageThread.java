@@ -19,22 +19,23 @@ import java.util.logging.Logger;
  */
 public class ReceiveMessageThread extends Thread {
 
-    private ObjectOutputStream output;
+//    private ObjectOutputStream output;
     private ObjectInputStream input;
     private ServerSocket server; // server socket
     private Socket connection; // connection to client
     private final boolean disconnect = false;
     private final int PORT = 12345;
 
-    public ReceiveMessageThread(Socket connection, ObjectOutputStream output, ObjectInputStream input) {
+    public ReceiveMessageThread(Socket connection, ObjectInputStream input, String name) {
+        super(name);
         this.connection = connection;
         this.input = input;
-        this.output = output;
     }
 
     private void processConnection() throws IOException, InterruptedException, ClassNotFoundException {
         while (!disconnect) {
-            System.out.println(input.readObject());
+//            System.out.println(input.readObject());
+System.out.println("al menos se conecto");
         }
     }
 
@@ -42,7 +43,6 @@ public class ReceiveMessageThread extends Thread {
     private void closeConnection() {
         System.out.println("\nTerminating connection");
         try {
-            output.close(); // close output stream
             input.close(); // close input stream
             connection.close(); // close socket  
             server.close(); // clse server socket
@@ -52,30 +52,24 @@ public class ReceiveMessageThread extends Thread {
     }
 
     
-    private void waitForConnection() throws IOException {
-        System.out.println("Waiting for connection...\n");
-        connection = server.accept(); // allow server to accept connection
-        System.out.println("Connection received from: " + connection.getInetAddress().getHostName());
-    }
+//    private void waitForConnection() throws IOException {
+//        System.out.println("Waiting for connection...\n");
+//        connection = server.accept(); // allow server to accept connection
+//        System.out.println("Connection received from: " + connection.getInetAddress().getHostName());
+//    }
     
-    private void getStreams() throws IOException {
-        // set up output stream for objects
-        output = new ObjectOutputStream(connection.getOutputStream());
-        output.flush(); // flush output buffer to send header information   
-        // set up input stream for objects
-        input = new ObjectInputStream(connection.getInputStream());
-    }
+//    private void getStreams() throws IOException {
+//        input = new ObjectInputStream(connection.getInputStream());
+//    }
     
     @Override
     public void run() {
         try {
-            getStreams();
-            waitForConnection();
+//            getStreams();
+//            waitForConnection();
             processConnection();
         } catch (IOException | InterruptedException | ClassNotFoundException ex) {
             Logger.getLogger(ReceiveMessageThread.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            closeConnection(); // close connection
-        }
+        } 
     }
 }
