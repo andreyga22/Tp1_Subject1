@@ -35,7 +35,6 @@ public class ReceiveMessageThread extends Thread {
     private void processConnection() throws IOException, InterruptedException, ClassNotFoundException {
         while (!disconnect) {
 //            System.out.println(input.readObject());
-System.out.println("al menos se conecto");
         }
     }
 
@@ -51,17 +50,14 @@ System.out.println("al menos se conecto");
         }
     }
 
-    
 //    private void waitForConnection() throws IOException {
 //        System.out.println("Waiting for connection...\n");
 //        connection = server.accept(); // allow server to accept connection
 //        System.out.println("Connection received from: " + connection.getInetAddress().getHostName());
 //    }
-    
 //    private void getStreams() throws IOException {
 //        input = new ObjectInputStream(connection.getInputStream());
 //    }
-    
     @Override
     public void run() {
         try {
@@ -70,6 +66,6 @@ System.out.println("al menos se conecto");
             processConnection();
         } catch (IOException | InterruptedException | ClassNotFoundException ex) {
             Logger.getLogger(ReceiveMessageThread.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
 }
