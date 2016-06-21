@@ -13,17 +13,17 @@ public class Server {
     private ServerSocket server; // server socket
     private Socket connection; // connection to client
     private int PORT = 12345;
+    private ReceiveMessageThread thread;
 
     public Server() {
     }
-
-    // set up and run server
+ 
     public void runServer() {
         try {
-            server = new ServerSocket(PORT); // create ServerSocket
-            waitForConnection(); // wait for a connection
-            getStreams(); // get input & output streams
-            ReceiveMessageThread thread = new ReceiveMessageThread(connection, input, "hilo de espera");
+            server = new ServerSocket(PORT); 
+            waitForConnection();
+            getStreams(); 
+            thread = new ReceiveMessageThread(connection, input, "hilo de espera");
             thread.start();
         } catch (IOException ex) {
             ex.printStackTrace();

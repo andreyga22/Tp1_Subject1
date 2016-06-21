@@ -8,8 +8,6 @@ package Views;
 import Decode.Tree;
 import java.awt.Frame;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import objectssockets.Server;
 
 /**
@@ -35,6 +33,8 @@ public class ChatWindow extends javax.swing.JDialog {
         this.tree = tree;
         this.server = server;
         this.setLocationRelativeTo(null);
+        jTextcode.setEditable(false);
+        jTextNormal.setEditable(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -155,6 +155,10 @@ public class ChatWindow extends javax.swing.JDialog {
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("Error en la escritura del codigo");
         }
+    }
+    
+    public void read(String text) {
+        jTextcode.setText(jTextcode.getText() + text);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

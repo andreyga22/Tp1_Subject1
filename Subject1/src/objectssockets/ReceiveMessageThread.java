@@ -7,7 +7,6 @@ package objectssockets;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -34,7 +33,7 @@ public class ReceiveMessageThread extends Thread {
 
     private void processConnection() throws IOException, InterruptedException, ClassNotFoundException {
         while (!disconnect) {
-//            System.out.println(input.readObject());
+            String text = (String) input.readObject();
         }
     }
 
@@ -67,5 +66,9 @@ public class ReceiveMessageThread extends Thread {
         } catch (IOException | InterruptedException | ClassNotFoundException ex) {
             Logger.getLogger(ReceiveMessageThread.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void receiveMessage(String text) {
+        
     }
 }
