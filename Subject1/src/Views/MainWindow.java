@@ -10,6 +10,7 @@ import Decode.ArrayAscii;
 import Decode.DuplicatedElement;
 import Decode.Tree;
 import File.ReadFile;
+import File.WriteFile;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JOptionPane;
@@ -226,16 +227,14 @@ public class MainWindow extends javax.swing.JFrame {
             for (int i = 0; i < MAX_CHAR; i++) {
                 if (arrayA.getByIndex(i) != null) {
                     tree.insertElement(arrayA.getByIndex(i));
-                    String t = arrayA.getByIndex(i).getCharacter() + " " + arrayA.getByIndex(i).getCode() + " " + arrayA.getByIndex(i).getWeight() + "\n";
-                    System.out.println(t);
+//                    String t = arrayA.getByIndex(i).getCharacter() + " " + arrayA.getByIndex(i).getCode() + " " + arrayA.getByIndex(i).getWeight() + "\n";
+//                    System.out.println(t);
                 }
             }
             tree.createDictionary();
 
-            tree.writeInTheFile();
-        } catch (DuplicatedElement ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
+            tree.writeInTheFile(new WriteFile());
+        } catch (DuplicatedElement | IOException ex) {
             ex.printStackTrace();
         }
     }

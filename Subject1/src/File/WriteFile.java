@@ -10,13 +10,14 @@ import Decode.Tree;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author andre
  */
-public class WriteFile {
+public class WriteFile implements Serializable{
 
     ObjectOutputStream objectOS;
 
