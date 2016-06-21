@@ -245,6 +245,15 @@ public class Tree implements Serializable {
         
     }
     
+    private char isLeaf(NodeTree root) {
+        if(root.getLeft() == null && root.getRight() == null) {
+            return root.getData().getCharacter();
+        }
+        else return ' ';
+    }
+    
+    public 
+    
     public String searchInDictionary(char letter) {
         String text = "";
         for (AsciiCharacter aux : dictionary) {
