@@ -5,6 +5,7 @@
  */
 package Views;
 
+import Main.Controller;
 import Decode.ArrayAscii;
 import Decode.DuplicatedElement;
 import Decode.Tree;
@@ -167,10 +168,13 @@ public class MainWindow extends javax.swing.JFrame {
             if (name.equals("")) {
                 throw new IllegalArgumentException("Error ");
             }
-            server = new Server();
+            
+            Controller controller = new Controller();
+            server = new Server( controller);
             server.runServer();
-            ChatWindow chat = new ChatWindow(this, true, name, tree, server);
-            chat.setVisible(true);
+            this.dispose();
+            controller.initializeChat(server, name, this, true, tree);
+            
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -181,7 +185,6 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_createKeyBtActionPerformed
 
     private void loadKeyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadKeyBtActionPerformed
-        //esto es para llamar al filechooser   
         fChooser1.setCurrentDirectory(new java.io.File("."));
         int returnVal = fChooser1.showOpenDialog(this);
         fChooser1.setAcceptAllFileFilterUsed(false);
@@ -236,8 +239,6 @@ public class MainWindow extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton connectBt;

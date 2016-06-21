@@ -138,11 +138,17 @@ public class ChatWindow extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         dispose();
+        server.closeConnection();
         parent.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void sendBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtActionPerformed
-
+        try {
+            String text = jTextWrite.getText();
+            server.sendMessage(text);
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
     }//GEN-LAST:event_sendBtActionPerformed
 
     private void write(String text) {
@@ -156,7 +162,7 @@ public class ChatWindow extends javax.swing.JDialog {
             System.out.println("Error en la escritura del codigo");
         }
     }
-    
+
     public void read(String text) {
         jTextcode.setText(jTextcode.getText() + text);
     }

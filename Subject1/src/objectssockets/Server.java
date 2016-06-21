@@ -1,5 +1,6 @@
 package objectssockets;
 
+import Main.Controller;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.IOException;
@@ -14,16 +15,18 @@ public class Server {
     private Socket connection; // connection to client
     private int PORT = 12345;
     private ReceiveMessageThread thread;
+    private Controller controller;
 
-    public Server() {
+    public Server(Controller controller) {
+        this.controller = controller;
     }
- 
+
     public void runServer() {
         try {
-            server = new ServerSocket(PORT); 
+            server = new ServerSocket(PORT);
             waitForConnection();
-            getStreams(); 
-            thread = new ReceiveMessageThread(connection, input, "hilo de espera");
+            getStreams();
+            thread = new ReceiveMessageThread(connection, input, "hilo de espera", controller);
             thread.start();
         } catch (IOException ex) {
             ex.printStackTrace();

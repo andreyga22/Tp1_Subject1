@@ -1,3 +1,4 @@
+package Main;
 
 import Views.MainWindow;
 
@@ -6,17 +7,15 @@ import Views.MainWindow;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author andre
  */
-public class Controller {
-    private MainWindow mainW = new MainWindow();
-    
-    public Controller(MainWindow m) {
-        this.mainW = m;
+public class Main {
+
+    public static void main(String[] args) {
+        MainWindow w = new MainWindow();
+//    Controller controller = new Controller(w);
+        w.setVisible(true);
     }
-    
-    
 }
