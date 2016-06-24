@@ -57,6 +57,7 @@ public class Server {
     public void closeConnection() {
         System.out.println("\nTerminating connection");
         try {
+            thread.closeConnection();
             output.close(); // close output stream
             connection.close(); // close socket
             server.close(); // clse server socket

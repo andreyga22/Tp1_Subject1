@@ -6,7 +6,6 @@
 package Views;
 
 import Main.Controller;
-import Decode.ArrayAscii;
 import Decode.DuplicatedElement;
 import Decode.Tree;
 import File.ReadFile;
@@ -26,7 +25,6 @@ public class MainWindow extends javax.swing.JFrame {
     private static final int MAX_CHAR = 468;
     private Tree tree = new Tree();
     private Server server;
-    private ArrayAscii arrayA;
 
     public MainWindow() {
         initComponents();
@@ -203,7 +201,6 @@ public class MainWindow extends javax.swing.JFrame {
         try {
             read.open(file);
             readTree();
-            readKey();
             read.close();
         } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -215,24 +212,9 @@ public class MainWindow extends javax.swing.JFrame {
         tree = read.readTree();
     }
 
-    private void readKey() throws IOException, ClassNotFoundException {
-
-        tree.setDictionary(read.readDictionary());
-    }
-
     public void createKey() {
         try {
-            arrayA = new ArrayAscii();
-            arrayA.fill();
-            for (int i = 0; i < MAX_CHAR; i++) {
-                if (arrayA.getByIndex(i) != null) {
-                    tree.insertElement(arrayA.getByIndex(i));
-//                    String t = arrayA.getByIndex(i).getCharacter() + " " + arrayA.getByIndex(i).getCode() + " " + arrayA.getByIndex(i).getWeight() + "\n";
-//                    System.out.println(t);
-                }
-            }
-            tree.createDictionary();
-
+            tree.createDictionaryAndTree();
             tree.writeInTheFile(new WriteFile());
         } catch (DuplicatedElement | IOException ex) {
             ex.printStackTrace();

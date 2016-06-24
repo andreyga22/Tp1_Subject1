@@ -21,9 +21,9 @@ public class ReceiveMessageThread extends Thread {
 
 //    private ObjectOutputStream output;
     private ObjectInputStream input;
-    private ServerSocket server; // server socket
+//    private ServerSocket server; // server socket
     private Socket connection; // connection to client
-    private final boolean disconnect = false;
+    private boolean disconnect = false;
     private final int PORT = 12345;
     private Controller controller;
 
@@ -42,12 +42,13 @@ public class ReceiveMessageThread extends Thread {
     }
 
     // close streams and socket
-    private void closeConnection() {
+    public void closeConnection() {
         System.out.println("\nTerminating connection");
         try {
+            disconnect = true;
             input.close(); // close input stream
             connection.close(); // close socket  
-            server.close(); // clse server socket
+//            server.close(); // clse server socket
         } catch (IOException ex) {
             ex.printStackTrace();
         }
