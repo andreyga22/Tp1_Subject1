@@ -12,6 +12,8 @@ import File.ReadFile;
 import File.WriteFile;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import objectssockets.Server;
 
@@ -167,20 +169,24 @@ public class MainWindow extends javax.swing.JFrame {
             if (name.equals("")) {
                 throw new IllegalArgumentException("Error ");
             }
-            
+
             Controller controller = new Controller();
-            server = new Server( controller);
+            server = new Server(controller);
             server.runServer();
             this.dispose();
             controller.initializeChat(server, name, this, true, tree);
-            
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_connectBtActionPerformed
 
     private void createKeyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createKeyBtActionPerformed
-        createKey();
+        try {
+            createKey();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }//GEN-LAST:event_createKeyBtActionPerformed
 
     private void loadKeyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadKeyBtActionPerformed
@@ -190,9 +196,6 @@ public class MainWindow extends javax.swing.JFrame {
         if (returnVal == fChooser1.APPROVE_OPTION) {
             File file = fChooser1.getSelectedFile();
             readFromTheFile(file);
-            System.out.println("adios");
-        } else {
-            System.out.println("File access cancelled by user.");
         }
 
     }//GEN-LAST:event_loadKeyBtActionPerformed
@@ -203,21 +206,20 @@ public class MainWindow extends javax.swing.JFrame {
             readTree();
             read.close();
         } catch (IOException | ClassNotFoundException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
     }
 
     private void readTree() throws IOException, ClassNotFoundException {
-
         tree = read.readTree();
     }
 
-    public void createKey() {
+    public void createKey() throws IOException {
         try {
             tree.createDictionaryAndTree();
             tree.writeInTheFile(new WriteFile());
-        } catch (DuplicatedElement | IOException ex) {
-            ex.printStackTrace();
+        } catch (DuplicatedElement ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 

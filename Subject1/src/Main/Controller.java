@@ -25,9 +25,9 @@ public class Controller {
     public void writeInTextField(String text) {
         chatW.read(text);
     }
-    
-    public void initializeChat(Server server, String name , Frame parent, boolean modal, Tree tree) {
-         chatW = new ChatWindow(parent, true, name, tree, server);
-            chatW.setVisible(true);
+
+    public void initializeChat(Server server, String name, Frame parent, boolean modal, Tree tree) {
+        chatW = new ChatWindow(parent, true, name, tree, server);
+        chatW.setVisible(true);
     }
 }

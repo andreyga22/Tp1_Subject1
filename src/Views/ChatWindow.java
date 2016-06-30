@@ -19,15 +19,13 @@ public class ChatWindow extends javax.swing.JDialog {
     /**
      * Creates new form ChatWindow
      */
-    private final String userName;
     private final Frame parent;
     private final Tree tree;
     private final Server server;
 
-    public ChatWindow(java.awt.Frame parent, boolean modal, String userName, Tree tree, Server server) {
+    public ChatWindow(java.awt.Frame parent, boolean modal, Tree tree, Server server) {
         super(parent, modal);
         initComponents();
-        this.userName = userName;
         titlelabel.setText("Hablando con el cliente");
         this.parent = parent;
         this.tree = tree;
@@ -35,7 +33,7 @@ public class ChatWindow extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         jTextcode.setEditable(false);
         jTextNormal.setEditable(false);
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -192,13 +190,13 @@ public class ChatWindow extends javax.swing.JDialog {
 
     private void sendBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtActionPerformed
         try {
-            if(!jTextWrite.getText().equals("")) {
-            String text = jTextWrite.getText();
-            jTextNormal.setText(jTextNormal.getText() + "\nServidor: " + text);
-            String codedText = tree.encode(text);
-            jTextcode.setText(jTextcode.getText() + "\nServidor: " + codedText);
-            server.sendMessage(codedText);
-            jTextWrite.setText("");
+            if (!jTextWrite.getText().equals("")) {
+                String text = jTextWrite.getText();
+                jTextNormal.setText(jTextNormal.getText() + "\nServidor: " + text);
+                String codedText = tree.encode(text);
+                jTextcode.setText(jTextcode.getText() + "\nServidor: " + codedText);
+                server.sendMessage(codedText);
+                jTextWrite.setText("");
             }
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -210,7 +208,7 @@ public class ChatWindow extends javax.swing.JDialog {
         String aux = decode(text);
         jTextNormal.setText(jTextNormal.getText() + "\nCliente: " + aux);
     }
-    
+
     private String decode(String text) {
         return tree.decode(text);
     }

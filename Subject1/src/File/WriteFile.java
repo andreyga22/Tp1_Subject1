@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *
  * @author andre
  */
-public class WriteFile implements Serializable{
+public class WriteFile implements Serializable {
 
     ObjectOutputStream objectOS;
 
@@ -28,10 +28,6 @@ public class WriteFile implements Serializable{
     public void writeTree(Tree tree) throws IOException {
         objectOS.writeObject(tree);
     }
-
-//    public void writeDictionary(ArrayList<AsciiCharacter> objects) throws IOException {
-//        objectOS.writeObject(objects);
-//    }
 
     public void close() throws IOException {
         objectOS.flush();

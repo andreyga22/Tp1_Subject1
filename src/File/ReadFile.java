@@ -30,11 +30,6 @@ public class ReadFile {
         return e;
     }
 
-//    public ArrayList<AsciiCharacter> readDictionary() throws IOException, ClassNotFoundException {
-//        ArrayList<AsciiCharacter> element = (ArrayList<AsciiCharacter>) objectIS.readObject();
-//        return element;
-//    }
-
     public void close() throws IOException {
         objectIS.close();
     }

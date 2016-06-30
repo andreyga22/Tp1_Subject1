@@ -29,7 +29,7 @@ public class Server {
             thread = new ReceiveMessageThread(connection, input, "hilo de espera", controller);
             thread.start();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -62,11 +62,7 @@ public class Server {
             connection.close(); // close socket
             server.close(); // clse server socket
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
     }
-//
-//    public static void main(String[] args) {
-//        new Server(12345).runServer();
-//    }
 }

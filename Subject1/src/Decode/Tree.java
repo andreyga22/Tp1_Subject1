@@ -17,30 +17,24 @@ import java.util.ArrayList;
 public class Tree implements Serializable {
 
     private NodeTree root = null;
-//    private WriteFile write = new WriteFile();
     private ArrayList<AsciiCharacter> dictionary = new ArrayList<>();
     private static final int MAX_CHAR = 468;
 
     public void insertElement(AsciiCharacter ascii) throws DuplicatedElement {
         root = insert(ascii, root);
-        System.out.println(ascii);
     }
 
     private NodeTree insert(AsciiCharacter ascii, NodeTree t) throws DuplicatedElement {
         if (t == null) {
             t = new NodeTree(ascii);
             return t;
+        } else if (ascii.getWeight() < t.getData().getWeight()) {
+            t.setLeft(insert(ascii, t.getLeft()));
+        } else if (ascii.getWeight() > t.getData().getWeight()) {
+            t.setRight(insert(ascii, t.getRight()));
         } else {
-            if (ascii.getWeight() < t.getData().getWeight()) {
-                t.setLeft(insert(ascii, t.getLeft()));
-            } else {
-                if (ascii.getWeight() > t.getData().getWeight()) {
-                    t.setRight(insert(ascii, t.getRight()));
-                } else {
-                    ascii.setWeight((int) (Math.random() * 12000));
-                    insert(ascii, root);
-                }
-            }
+            ascii.setWeight((int) (Math.random() * 12000));
+            insert(ascii, root);
         }
         return t;
     }
@@ -186,7 +180,6 @@ public class Tree implements Serializable {
     public void writeInTheFile(WriteFile wf) throws IOException {
         wf.open("key.bin");
         writeTree(wf);
-//        writeKey(wf);
         wf.close();
     }
 
@@ -194,15 +187,7 @@ public class Tree implements Serializable {
         wf.writeTree(this);
     }
 
-//    private void writeKey(WriteFile wf) throws IOException {
-//        wf.writeDictionary(dictionary);
-//    }
-
-//    public void setDictionary(ArrayList<AsciiCharacter> element) {
-//        this.dictionary = element;
-//    }
-
-   public void createDictionaryAndTree() throws DuplicatedElement {
+    public void createDictionaryAndTree() throws DuplicatedElement {
         for (int i = 32; i < MAX_CHAR; i++) {
             int random = (int) (Math.random() * 12000);
             AsciiCharacter auxA = new AsciiCharacter(random, (char) i);
@@ -239,34 +224,27 @@ public class Tree implements Serializable {
 
     public String encode(String text) {
         String code = "";
-        System.out.println("Palabra sin codificar " + text);
         for (int i = 0; i < text.length(); i++) {
             String searched = searchInDictionary(text.charAt(i));
-//            if (!searched.equals("")) {
-                code += searched;
-//            }
+            code += searched;
         }
-        System.out.println("codigo despues de codigicar " + code);
         return code;
     }
 
     public String decode(String text) {
-        System.out.println("Variable que se recibe en el decode " + text);
         String aux = "";
         String ready = "";
         for (int i = 0; i < text.length(); i++) {
             aux += text.charAt(i);
-            System.out.println("aux decde" + aux);
             String temp = searchCode(aux);
             if (temp != null) {
                 ready += temp;
-                System.out.println("ready " + ready);
                 aux = "";
             }
         }
         return ready;
     }
-    
+
     public String searchInDictionary(char letter) {
         String text = "";
         for (AsciiCharacter aux : dictionary) {
@@ -279,7 +257,6 @@ public class Tree implements Serializable {
 
     private String searchCode(String text) {
         for (AsciiCharacter aux : dictionary) {
-            System.out.println("esto hay dentro del dictionary" + aux.getCode());
             if (aux != null && aux.getCode().equalsIgnoreCase(text)) {
                 return aux.getCharacter() + "";
             }

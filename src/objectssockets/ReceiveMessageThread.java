@@ -19,9 +19,7 @@ import java.util.logging.Logger;
  */
 public class ReceiveMessageThread extends Thread {
 
-//    private ObjectOutputStream output;
     private ObjectInputStream input;
-//    private ServerSocket server; // server socket
     private Socket connection; // connection to client
     private boolean disconnect = false;
     private final int PORT = 12345;
@@ -48,28 +46,17 @@ public class ReceiveMessageThread extends Thread {
             disconnect = true;
             input.close(); // close input stream
             connection.close(); // close socket  
-//            server.close(); // clse server socket
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
     }
 
-//    private void waitForConnection() throws IOException {
-//        System.out.println("Waiting for connection...\n");
-//        connection = server.accept(); // allow server to accept connection
-//        System.out.println("Connection received from: " + connection.getInetAddress().getHostName());
-//    }
-//    private void getStreams() throws IOException {
-//        input = new ObjectInputStream(connection.getInputStream());
-//    }
     @Override
     public void run() {
         try {
-//            getStreams();
-//            waitForConnection();
             processConnection();
         } catch (IOException | InterruptedException | ClassNotFoundException ex) {
-            Logger.getLogger(ReceiveMessageThread.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
 
